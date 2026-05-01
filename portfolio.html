@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yusuf Adisa - Senior Software Engineer | Web3 Architect</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c10;
+    --bg2: #0d1117;
+    --bg3: #161b22;
+    --border: #21262d;
+    --green: #00ff88;
+    --cyan: #00d4ff;
+    --purple: #7c3aed;
+    --text: #e6edf3;
+    --muted: #7d8590;
+    --card: #0d1117;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* GRID NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(8,12,16,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { color: var(--green); font-weight: 700; font-size: 1rem; letter-spacing: .1em; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: .8rem; letter-spacing: .08em; transition: color .2s; }
+  .nav-links a:hover { color: var(--green); }
+  .nav-cta {
+    background: var(--green); color: #000; padding: .45rem 1.2rem;
+    border-radius: 4px; font-weight: 700; font-size: .8rem;
+    text-decoration: none; letter-spacing: .05em; transition: opacity .2s;
+  }
+  .nav-cta:hover { opacity: .85; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 2rem 4rem;
+    max-width: 1100px; margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(0,255,136,.08); border: 1px solid rgba(0,255,136,.2);
+    color: var(--green); padding: .3rem .8rem; border-radius: 100px;
+    font-size: .75rem; letter-spacing: .12em; margin-bottom: 2rem;
+    animation: fadeUp .6s ease both;
+  }
+  .hero-tag::before { content: '●'; font-size: .5rem; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp .6s .1s ease both;
+  }
+  h1 .accent { color: var(--green); }
+  h1 .dim { color: var(--muted); }
+  .hero-sub {
+    font-size: 1.05rem; color: var(--muted);
+    max-width: 580px; margin-bottom: 2.5rem;
+    border-left: 2px solid var(--green);
+    padding-left: 1rem;
+    animation: fadeUp .6s .2s ease both;
+  }
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp .6s .3s ease both;
+  }
+  .btn-primary {
+    background: var(--green); color: #000; padding: .75rem 2rem;
+    border-radius: 4px; font-weight: 700; font-size: .85rem;
+    text-decoration: none; letter-spacing: .06em; transition: all .2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,255,136,.3); }
+  .btn-secondary {
+    border: 1px solid var(--border); color: var(--text);
+    padding: .75rem 2rem; border-radius: 4px; font-size: .85rem;
+    text-decoration: none; letter-spacing: .06em; transition: all .2s;
+    background: var(--bg3);
+  }
+  .btn-secondary:hover { border-color: var(--green); color: var(--green); }
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem; flex-wrap: wrap;
+    animation: fadeUp .6s .4s ease both;
+  }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--green); }
+  .stat-label { color: var(--muted); font-size: .75rem; letter-spacing: .08em; }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; position: relative; z-index: 1; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: .72rem; letter-spacing: .2em; color: var(--green);
+    margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem;
+  }
+  .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--green); opacity: .4; }
+  h2 {
+    font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800; letter-spacing: -.02em; margin-bottom: 3rem;
+  }
+  h3 { font-family: 'Syne', sans-serif; font-weight: 700; }
+
+  /* ABOUT */
+  #about { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: .9rem; }
+  .about-text p strong { color: var(--text); }
+  .about-pills { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+  .pill {
+    background: rgba(0,255,136,.07); border: 1px solid rgba(0,255,136,.15);
+    color: var(--green); padding: .25rem .75rem; border-radius: 100px;
+    font-size: .75rem; letter-spacing: .06em;
+  }
+  .about-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 2rem;
+  }
+  .about-card .metric { margin-bottom: 1.5rem; }
+  .about-card .metric:last-child { margin-bottom: 0; }
+  .metric-val { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--cyan); }
+  .metric-desc { color: var(--muted); font-size: .8rem; }
+
+  /* PROJECTS */
+  #projects { background: var(--bg); }
+  .projects-grid { display: grid; gap: 1.5rem; }
+  .project-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 2rem;
+    transition: border-color .2s, transform .2s;
+    cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .project-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--green), var(--cyan));
+    transform: scaleX(0); transform-origin: left; transition: transform .3s;
+  }
+  .project-card:hover { border-color: rgba(0,255,136,.3); transform: translateY(-3px); }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+  .project-title { font-size: 1.3rem; margin-bottom: .25rem; }
+  .project-role { font-size: .75rem; color: var(--green); letter-spacing: .08em; }
+  .project-link { color: var(--muted); font-size: .75rem; text-decoration: none; border: 1px solid var(--border); padding: .3rem .8rem; border-radius: 4px; transition: all .2s; }
+  .project-link:hover { border-color: var(--green); color: var(--green); }
+  .project-body { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .project-section-label { font-size: .7rem; letter-spacing: .15em; color: var(--muted); margin-bottom: .5rem; }
+  .project-text { color: var(--muted); font-size: .85rem; }
+  .tech-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .75rem; }
+  .tech-tag { background: var(--bg2); border: 1px solid var(--border); color: var(--muted); padding: .2rem .6rem; border-radius: 4px; font-size: .7rem; }
+  .impact-items { list-style: none; }
+  .impact-items li { display: flex; align-items: flex-start; gap: .5rem; color: var(--muted); font-size: .85rem; margin-bottom: .4rem; }
+  .impact-items li::before { content: '→'; color: var(--green); flex-shrink: 0; }
+
+  /* ARCH DIAGRAM */
+  .arch-diagram {
+    grid-column: 1 / -1; background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.5rem; margin-top: .5rem;
+    font-size: .7rem; overflow-x: auto;
+  }
+  .arch-row { display: flex; align-items: center; justify-content: center; gap: .5rem; flex-wrap: wrap; margin: .5rem 0; }
+  .arch-box {
+    background: var(--bg3); border: 1px solid var(--border);
+    padding: .35rem .7rem; border-radius: 4px; white-space: nowrap;
+    font-size: .68rem; letter-spacing: .04em;
+  }
+  .arch-box.green { border-color: rgba(0,255,136,.4); color: var(--green); }
+  .arch-box.cyan { border-color: rgba(0,212,255,.4); color: var(--cyan); }
+  .arch-box.purple { border-color: rgba(124,58,237,.6); color: #a78bfa; }
+  .arch-arrow { color: var(--muted); }
+
+  /* SKILLS */
+  #skills { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+  .skill-group { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; }
+  .skill-group-title { font-size: .75rem; letter-spacing: .15em; color: var(--green); margin-bottom: 1rem; }
+  .skill-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: .75rem; }
+  .skill-name { font-size: .8rem; color: var(--text); }
+  .skill-bar { width: 80px; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .skill-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--cyan)); border-radius: 2px; }
+
+  /* TIMELINE */
+  #experience { background: var(--bg); }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
+  .timeline-item { position: relative; margin-bottom: 2.5rem; }
+  .timeline-dot {
+    position: absolute; left: -2rem; top: .3rem;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--green); box-shadow: 0 0 8px rgba(0,255,136,.5);
+    transform: translateX(-4.5px);
+  }
+  .timeline-dot.dim { background: var(--muted); box-shadow: none; }
+  .timeline-period { font-size: .72rem; color: var(--muted); letter-spacing: .1em; margin-bottom: .3rem; }
+  .timeline-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: .15rem; }
+  .timeline-org { color: var(--green); font-size: .8rem; }
+  .timeline-desc { color: var(--muted); font-size: .82rem; margin-top: .5rem; }
+
+  /* ACHIEVEMENTS */
+  #achievements { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .ach-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+  .ach-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.5rem;
+    transition: border-color .2s;
+  }
+  .ach-card:hover { border-color: rgba(0,255,136,.3); }
+  .ach-icon { font-size: 1.5rem; margin-bottom: .75rem; }
+  .ach-val { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--green); }
+  .ach-label { color: var(--muted); font-size: .78rem; margin-top: .25rem; }
+
+  /* CONTACT */
+  #contact { background: var(--bg); text-align: center; }
+  .contact-tagline { color: var(--muted); font-size: .9rem; max-width: 500px; margin: 0 auto 2rem; }
+  .contact-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+  .contact-link {
+    display: flex; align-items: center; gap: .5rem;
+    border: 1px solid var(--border); padding: .75rem 1.5rem;
+    border-radius: 6px; text-decoration: none; color: var(--text);
+    font-size: .82rem; transition: all .2s; background: var(--bg3);
+  }
+  .contact-link:hover { border-color: var(--green); color: var(--green); }
+  .contact-cta { margin-top: 3rem; }
+  .contact-cta a {
+    display: inline-block; background: var(--green); color: #000;
+    padding: 1rem 3rem; border-radius: 4px; font-weight: 700;
+    font-size: .9rem; text-decoration: none; letter-spacing: .06em;
+    transition: all .2s;
+  }
+  .contact-cta a:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,255,136,.3); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center; padding: 2rem; color: var(--muted);
+    font-size: .75rem; z-index: 1; position: relative;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s, transform .6s; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .about-grid, .project-body { grid-template-columns: 1fr; }
+    .hero-stats { gap: 2rem; }
+    nav { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">// HAY</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Hire Me →</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">Available for remote opportunities</div>
+  <h1>
+    <span style="font-size:1.2rem; font-weight:400; color:var(--muted); display:block; margin-bottom:.5rem; letter-spacing:.15em;">YUSUF ADISA HAMMED</span>
+    Senior Software<br>
+    Engineer <span class="dim">&</span><br>
+    <span class="accent">Web3 Architect</span>
+  </h1>
+  <p class="hero-sub">
+    I build scalable, secure systems powering millions of users — from distributed backends to decentralized blockchain infrastructure.
+  </p>
+  <div class="hero-ctas">
+    <a href="#projects" class="btn-primary">View Projects</a>
+    <a href="#contact" class="btn-secondary">Hire Me</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">2M+</div>
+      <div class="stat-label">PLATFORM USERS</div>
+    </div>
+    <div>
+      <div class="stat-num">6+</div>
+      <div class="stat-label">YEARS EXPERIENCE</div>
+    </div>
+    <div>
+      <div class="stat-num">4</div>
+      <div class="stat-label">STARTUPS LED</div>
+    </div>
+    <div>
+      <div class="stat-num">3</div>
+      <div class="stat-label">BLOCKCHAIN SYSTEMS</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="section-label">// ABOUT</div>
+        <h2>Engineering at Scale,<br>Architecting the Future</h2>
+        <p>I'm a Senior Software Engineer and Web3 Architect based in Ibadan, Nigeria, with <strong>6+ years</strong> engineering production systems across fintech, real estate, and decentralized ecosystems.</p>
+        <p>Currently leading the engineering of <strong>Map of Pi</strong> — a global Web3 e-commerce platform with over <strong>2 million active users</strong>. I joined as a recruit developer and progressed to Lead Engineer, owning architecture decisions, team mentorship, and product strategy.</p>
+        <p>As a founder and co-founder of three Web3 ventures, I operate at the intersection of <strong>backend systems design, blockchain architecture, and product ownership</strong> — shipping real solutions to real markets.</p>
+        <div class="about-pills">
+          <span class="pill">System Design</span>
+          <span class="pill">Blockchain</span>
+          <span class="pill">Startup Leadership</span>
+          <span class="pill">API Architecture</span>
+          <span class="pill">Smart Contracts</span>
+          <span class="pill">NFTs</span>
+        </div>
+      </div>
+      <div class="about-card reveal">
+        <div class="metric">
+          <div class="metric-val">2,000,000+</div>
+          <div class="metric-desc">Users on Map of Pi platform globally</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">3 Ventures</div>
+          <div class="metric-desc">Founded/co-founded as technical lead</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">Recruit → Lead</div>
+          <div class="metric-desc">Full career arc at a single high-growth company</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val">Gov + Web3</div>
+          <div class="metric-desc">Military-grade systems to DeFi infrastructure</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label">// PROJECTS</div>
+    <h2>Case Studies</h2>
+    <div class="projects-grid">
+
+      <!-- MAP OF PI -->
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div>
+            <h3 class="project-title">Map of Pi</h3>
+            <div class="project-role">LEAD SOFTWARE ENGINEER · Jan 2024 – Present</div>
+          </div>
+          <a href="https://mapofpi.com" target="_blank" class="project-link">↗ mapofpi.com</a>
+        </div>
+        <div class="project-body">
+          <div>
+            <div class="project-section-label">// PROBLEM</div>
+            <p class="project-text">Pi Network had 35M+ users with no commerce layer — no way to actually spend Pi tokens in the real world. Vendors had no platform, buyers had no trust mechanism.</p>
+            <div style="margin-top:1rem">
+              <div class="project-section-label">// SOLUTION</div>
+              <p class="project-text">Built a full-stack Web3 e-commerce marketplace with geolocation vendor discovery, Pi payment integration, order lifecycle management, and a scalable API designed for millions of concurrent users.</p>
+            </div>
+          </div>
+          <div>
+            <div class="project-section-label">// IMPACT</div>
+            <ul class="impact-items">
+              <li>2M+ registered users globally</li>
+              <li>Reduced API latency through optimized endpoint design</li>
+              <li>Architected vendor + transaction backend from scratch</li>
+              <li>Led team of engineers; established engineering standards</li>
+              <li>Progressive role: Recruit → Core → Lead</li>
+            </ul>
+          </div>
+          <div class="arch-diagram">
+            <div style="text-align:center;font-size:.65rem;color:var(--muted);margin-bottom:.75rem;letter-spacing:.1em">// SYSTEM ARCHITECTURE</div>
+            <div class="arch-row">
+              <span class="arch-box green">Mobile Clients</span>
+              <span class="arch-arrow">→</span>
+              <span class="arch-box cyan">API Gateway</span>
+              <span class="arch-arrow">→</span>
+              <span class="arch-box green">Load Balancer</span>
+            </div>
+            <div class="arch-row">
+              <span class="arch-arrow">↓</span>
+            </div>
+            <div class="arch-row">
+              <span class="arch-box">User Service</span>
+              <span class="arch-box">Vendor Service</span>
+              <span class="arch-box">Order Service</span>
+              <span class="arch-box purple">Pi Payment</span>
+            </div>
+            <div class="arch-row">
+              <span class="arch-arrow">↓</span>
+            </div>
+            <div class="arch-row">
+              <span class="arch-box cyan">MongoDB Atlas</span>
+              <span class="arch-arrow">·</span>
+              <span class="arch-box green">Cloudinary CDN</span>
+              <span class="arch-arrow">·</span>
+              <span class="arch-box purple">Pi Blockchain</span>
+            </div>
+          </div>
+          <div style="grid-column:1/-1">
+            <div class="project-section-label">// TECH STACK</div>
+            <div class="tech-tags">
+              <span class="tech-tag">Node.js</span><span class="tech-tag">React</span><span class="tech-tag">MongoDB</span>
+              <span class="tech-tag">Express</span><span class="tech-tag">Pi SDK</span><span class="tech-tag">Cloudinary</span>
+              <span class="tech-tag">REST APIs</span><span class="tech-tag">JWT Auth</span><span class="tech-tag">Docker</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROPTRIZ HUB -->
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div>
+            <h3 class="project-title">Proptriz</h3>
+            <div class="project-role">FOUNDER & LEAD ENGINEER · Jan 2025 – Present</div>
+          </div>
+          <a href="https://proptriz.com" target="_blank" class="project-link">↗ proptriz.com</a>
+        </div>
+        <div class="project-body">
+          <div>
+            <div class="project-section-label">// PROBLEM</div>
+            <p class="project-text">Africa's property market is broken — listings scattered across WhatsApp groups, fake and duplicate ads, unverifiable agents, and zero access to real estate investment for everyday people. No single trusted digital layer exists.</p>
+            <div style="margin-top:1rem">
+              <div class="project-section-label">// SOLUTION</div>
+              <p class="project-text">Building a mobile-first real estate marketplace in three phases: a location-based property & agent discovery platform (MVP), a trust and verification layer with documented credentialing, and a blockchain-powered fractional investment infrastructure — making real estate investment accessible from ₦10,000.</p>
+            </div>
+          </div>
+          <div>
+            <div class="project-section-label">// IMPACT & SCOPE</div>
+            <ul class="impact-items">
+              <li>MVP: listings for apartments, land, shops, shortlets, hotels + agent directory</li>
+              <li>In-app messaging, user reviews, geolocation-based discovery (interactive map)</li>
+              <li>Phase 2: verified badge system with documentation + blockchain transaction records</li>
+              <li>Phase 3: smart contract investment pools, NFT ownership certs, fractional shares</li>
+              <li>Initial market: Nigeria → Pan-African rollout</li>
+            </ul>
+          </div>
+          <div class="arch-diagram">
+            <div style="text-align:center;font-size:.65rem;color:var(--muted);margin-bottom:.75rem;letter-spacing:.1em">// PHASED PLATFORM ARCHITECTURE</div>
+            <div class="arch-row">
+              <span class="arch-box green">MVP · Discovery</span>
+              <span class="arch-arrow">→</span>
+              <span class="arch-box cyan">Phase 2 · Verification</span>
+              <span class="arch-arrow">→</span>
+              <span class="arch-box purple">Phase 3 · Investment</span>
+            </div>
+            <div class="arch-row"><span class="arch-arrow">↓</span></div>
+            <div class="arch-row">
+              <span class="arch-box">Property Listings</span>
+              <span class="arch-box">Agent Directory</span>
+              <span class="arch-box cyan">Verified Badges</span>
+              <span class="arch-box purple">Smart Contracts</span>
+            </div>
+            <div class="arch-row"><span class="arch-arrow">↓</span></div>
+            <div class="arch-row">
+              <span class="arch-box">In-App Messaging</span>
+              <span class="arch-box">Reviews & Ratings</span>
+              <span class="arch-box cyan">On-Chain Records</span>
+              <span class="arch-box purple">NFT Ownership</span>
+            </div>
+            <div class="arch-row"><span class="arch-arrow">↓</span></div>
+            <div class="arch-row">
+              <span class="arch-box green">React Native App</span>
+              <span class="arch-box cyan">Node/Express.js API</span>
+              <span class="arch-box">MongoDB</span>
+              <span class="arch-box purple">Blockchain Layer</span>
+            </div>
+          </div>
+          <div style="grid-column:1/-1">
+            <div class="project-section-label">// TECH STACK</div>
+            <div class="tech-tags">
+              <span class="tech-tag">React Native</span><span class="tech-tag">Next.js</span><span class="tech-tag">Node/Express.js</span>
+              <span class="tech-tag">MongoDB</span><span class="tech-tag">Smart Contracts</span><span class="tech-tag">NFTs</span>
+              <span class="tech-tag">Geolocation API</span><span class="tech-tag">WebSockets</span><span class="tech-tag">TypeScript</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESCROWPI -->
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div>
+            <h3 class="project-title">Escrowpi</h3>
+            <div class="project-role">CO-FOUNDER & LEAD ENGINEER · Jul 2025 – Present</div>
+          </div>
+          <a href="https://escrowpiwallet-mainnet.netlify.app" target="_blank" class="project-link">↗ Live App</a>
+        </div>
+        <div class="project-body">
+          <div>
+            <div class="project-section-label">// PROBLEM</div>
+            <p class="project-text">P2P and B2B transactions on Pi Network lack a trust layer. Buyers and sellers have no protection against fraud, with no dispute resolution mechanism.</p>
+            <div style="margin-top:1rem">
+              <div class="project-section-label">// SOLUTION</div>
+              <p class="project-text">Built a blockchain-backed escrow payment system. Funds are locked in smart contract until both parties confirm delivery. Dispute resolution logic and wallet interaction integrated natively.</p>
+            </div>
+          </div>
+          <div>
+            <div class="project-section-label">// IMPACT</div>
+            <ul class="impact-items">
+              <li>Secure P2P and B2B payment flows</li>
+              <li>Smart contract-based fund locking</li>
+              <li>Dispute resolution system built in</li>
+              <li>Blockchain-verified transaction audit trail</li>
+            </ul>
+          </div>
+          <div class="arch-diagram">
+            <div style="text-align:center;font-size:.65rem;color:var(--muted);margin-bottom:.75rem;letter-spacing:.1em">// ESCROW TRANSACTION FLOW</div>
+            <div class="arch-row">
+              <span class="arch-box green">Buyer</span>
+              <span class="arch-arrow">→</span>
+              <span class="arch-box purple">Escrow Contract</span>
+              <span class="arch-arrow">←</span>
+              <span class="arch-box cyan">Seller</span>
+            </div>
+            <div class="arch-row"><span class="arch-arrow">↓</span></div>
+            <div class="arch-row">
+              <span class="arch-box">Funds Locked</span>
+              <span class="arch-arrow">→</span>
+              <span class="arch-box green">Delivery Confirmed</span>
+              <span class="arch-arrow">→</span>
+              <span class="arch-box cyan">Release</span>
+            </div>
+            <div class="arch-row"><span class="arch-arrow">↓ Dispute?</span></div>
+            <div class="arch-row">
+              <span class="arch-box purple">Arbitration Module</span>
+              <span class="arch-arrow">→</span>
+              <span class="arch-box">Resolution + Refund</span>
+            </div>
+          </div>
+          <div style="grid-column:1/-1">
+            <div class="project-section-label">// TECH STACK</div>
+            <div class="tech-tags">
+              <span class="tech-tag">Smart Contracts</span><span class="tech-tag">Pi Network</span><span class="tech-tag">Node.js</span>
+              <span class="tech-tag">React</span><span class="tech-tag">Wallet APIs</span><span class="tech-tag">MongoDB</span>
+              <span class="tech-tag">Blockchain Verification</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAPCAP TOKEN -->
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div>
+            <h3 class="project-title">MapCap Token</h3>
+            <div class="project-role">CO-FOUNDER & BLOCKCHAIN RESEARCHER · Jan 2026 – Present</div>
+          </div>
+        </div>
+        <div class="project-body">
+          <div>
+            <div class="project-section-label">// VISION</div>
+            <p class="project-text">Traditional IPOs are gatekept by geography, wealth, and regulation. MapCap envisions a world where anyone can invest in early-stage companies via tokenized equity on-chain.</p>
+            <div style="margin-top:1rem">
+              <div class="project-section-label">// SOLUTION</div>
+              <p class="project-text">Designing token-based IPO infrastructure — smart contract frameworks for asset tokenization, compliant equity distribution, and decentralized governance models for investor participation.</p>
+            </div>
+          </div>
+          <div>
+            <div class="project-section-label">// SCOPE</div>
+            <ul class="impact-items">
+              <li>Token-based IPO architecture design</li>
+              <li>Smart contract frameworks for equity tokenization</li>
+              <li>Decentralized governance models</li>
+              <li>Regulatory compliance research</li>
+            </ul>
+          </div>
+          <div class="arch-diagram">
+            <div style="text-align:center;font-size:.65rem;color:var(--muted);margin-bottom:.75rem;letter-spacing:.1em">// TOKENIZATION PIPELINE</div>
+            <div class="arch-row">
+              <span class="arch-box green">Company Asset</span>
+              <span class="arch-arrow">→</span>
+              <span class="arch-box purple">Tokenization Engine</span>
+              <span class="arch-arrow">→</span>
+              <span class="arch-box cyan">Token Issuance</span>
+            </div>
+            <div class="arch-row"><span class="arch-arrow">↓</span></div>
+            <div class="arch-row">
+              <span class="arch-box">Investor KYC</span>
+              <span class="arch-arrow">→</span>
+              <span class="arch-box green">Token Distribution</span>
+              <span class="arch-arrow">→</span>
+              <span class="arch-box purple">Governance DAO</span>
+            </div>
+          </div>
+          <div style="grid-column:1/-1">
+            <div class="project-section-label">// TECH STACK</div>
+            <div class="tech-tags">
+              <span class="tech-tag">Tokenization</span><span class="tech-tag">Smart Contracts</span><span class="tech-tag">DeFi</span>
+              <span class="tech-tag">DAO Architecture</span><span class="tech-tag">Blockchain Research</span><span class="tech-tag">TypeScript</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label">// SKILLS</div>
+    <h2>Technical Stack</h2>
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <div class="skill-group-title">BACKEND</div>
+        <div class="skill-item"><span class="skill-name">Node.js / Express</span><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Python</span><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">REST API Design</span><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">MongoDB</span><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">PostgreSQL</span><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Microservices</span><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">FRONTEND</div>
+        <div class="skill-item"><span class="skill-name">React / Next.js</span><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">TypeScript</span><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Tailwind CSS</span><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">JavaScript (ES6+)</span><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">DEVOPS</div>
+        <div class="skill-item"><span class="skill-name">Docker</span><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">CI/CD Pipelines</span><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Cloudinary</span><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Linux / Bash</span><div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Git / GitHub</span><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">BLOCKCHAIN / WEB3</div>
+        <div class="skill-item"><span class="skill-name">Smart Contracts</span><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">NFT Systems</span><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Pi Network SDK</span><div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Tokenization</span><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">DeFi Architecture</span><div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-label">// EXPERIENCE</div>
+    <h2>Career Timeline</h2>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">JAN 2026 – PRESENT</div>
+        <div class="timeline-title">Lead Software Engineer</div>
+        <div class="timeline-org">Map of Pi</div>
+        <div class="timeline-desc">Leading architecture of a 2M+ user Web3 e-commerce platform. Owns system design, mentors engineers, drives engineering best practices.</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">JAN 2026 – PRESENT</div>
+        <div class="timeline-title">Co-Founder & Blockchain Researcher</div>
+        <div class="timeline-org">MapCap Token</div>
+        <div class="timeline-desc">Designing token-based IPO infrastructure and smart contract frameworks for asset tokenization.</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">JUL 2025 – PRESENT</div>
+        <div class="timeline-title">Co-Founder & Lead Engineer</div>
+        <div class="timeline-org">Escrowpi App</div>
+        <div class="timeline-desc">Built blockchain-backed escrow payment system for secure P2P and B2B transactions with dispute resolution.</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">MAR 2025 – JAN 2026</div>
+        <div class="timeline-title">Core Software Engineer</div>
+        <div class="timeline-org">Map of Pi</div>
+        <div class="timeline-desc">Built core platform features, payment and order lifecycle systems, scaled infrastructure for global users.</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">JAN 2025 – PRESENT</div>
+        <div class="timeline-title">Founder & Core Engineer</div>
+        <div class="timeline-org">Proptriz Hub</div>
+        <div class="timeline-desc">Architected Web3 real estate platform with NFT-based property ownership for African markets.</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot dim"></div>
+        <div class="timeline-period">MAR 2024 – MAR 2025</div>
+        <div class="timeline-title">Fullstack Developer (Recruit)</div>
+        <div class="timeline-org">Map of Pi</div>
+        <div class="timeline-desc">Started as a recruit developer — built UI components and backend endpoints, integrated third-party APIs.</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot dim"></div>
+        <div class="timeline-period">FEB 2023 – SEPT 2023</div>
+        <div class="timeline-title">Software Engineer (Contract)</div>
+        <div class="timeline-org">Nigerian Air Force</div>
+        <div class="timeline-desc">Upgraded AI-powered CCTV surveillance system for base security. Improved detection accuracy and monitoring efficiency.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="container">
+    <div class="section-label">// ACHIEVEMENTS</div>
+    <h2>Impact by Numbers</h2>
+    <div class="ach-grid">
+      <div class="ach-card reveal">
+        <div class="ach-icon">🚀</div>
+        <div class="ach-val">2M+</div>
+        <div class="ach-label">Users on Web3 platform scaled from 0</div>
+      </div>
+      <div class="ach-card reveal">
+        <div class="ach-icon">🏗️</div>
+        <div class="ach-val">3</div>
+        <div class="ach-label">Blockchain systems architected and shipped</div>
+      </div>
+      <div class="ach-card reveal">
+        <div class="ach-icon">🔐</div>
+        <div class="ach-val">Gov-Grade</div>
+        <div class="ach-label">AI surveillance system delivered to Nigerian Air Force</div>
+      </div>
+      <div class="ach-card reveal">
+        <div class="ach-icon">⚡</div>
+        <div class="ach-val">Recruit → Lead</div>
+        <div class="ach-label">Full career progression in under 2 years</div>
+      </div>
+      <div class="ach-card reveal">
+        <div class="ach-icon">🌍</div>
+        <div class="ach-val">Africa-First</div>
+        <div class="ach-label">NFT real estate platform for underserved markets</div>
+      </div>
+      <div class="ach-card reveal">
+        <div class="ach-icon">💼</div>
+        <div class="ach-val">4</div>
+        <div class="ach-label">Startups founded or co-founded as technical lead</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label" style="justify-content:center">// CONTACT</div>
+    <h2>Let's Build Something Impactful</h2>
+    <p class="contact-tagline">Open to senior remote roles, technical partnerships, and impactful Web3 collaborations. Response time: under 24 hours.</p>
+    <div class="contact-links">
+      <a href="mailto:yusufhammed39@gmail.com" class="contact-link">✉ Email Me</a>
+      <a href="https://linkedin.com/in/adisa-yusuf-287ab2152" target="_blank" class="contact-link">💼 LinkedIn</a>
+      <a href="https://github.com/adisa39" target="_blank" class="contact-link">⌥ GitHub</a>
+    </div>
+    <div class="contact-cta">
+      <a href="mailto:yusufhammed39@gmail.com">Hire Me — Let's Talk →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>Built with precision · Senior Software Engineer & Web3 Architect · Ibadan, Nigeria</div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
